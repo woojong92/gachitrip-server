@@ -36,6 +36,9 @@ yarn add @types/bcrypt --dev
 yarn add twilio
 yarn add @types/twilio --dev
 
+yarn add jsonwebtoken
+yarn add @types/jsonwebtoken --dev
+
 ## Resolvers
 
 ### Public Resolvers:
