@@ -5,12 +5,11 @@ const twilioClient = Twilio(
     "0a3e8b7d0edcecc6e7a9854892b60a1d"//process.env.TWILIO_TOKEN
 );
 
-process.env.TWILIO_SID
 const sendSMS = (to: string, body: string) => {
     return twilioClient.messages.create({
         body,
         to,
-        from: process.env.TWILIO_PHONE
+        from: "+12058395426"//process.env.TWILIO_PHONE
     })
 }
 

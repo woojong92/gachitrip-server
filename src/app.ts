@@ -2,29 +2,56 @@
 import {GraphQLServer} from "graphql-yoga";
 import cors from "cors";
 import helmet from "helmet";
-//import logger from "morgan";
-import  schema from "./schema";
+import logger from "morgan";
+import schema from "./schema";
+import decodeJWT from "./utils/decodeJWT";
+import { NextFunction, Response } from "express";
 
-// class App {
-//     public app: GraphQLServer;
-//     constructor() {
-//         this.app = new GraphQLServer({
-//             schema
-//         });
-//         this.middlewares();
-//     }
-//     private middlewares = () : void => {
-//         this.app.express.use(cors());
-//         this.app.express.use(logger("dev"));
-//         this.app.express.use(helmet());
-//     }
-// }
-const app = new GraphQLServer({
-    schema
-});
+class App {
+    public app: GraphQLServer;
+    constructor() {
+        this.app = new GraphQLServer({
+            schema,
+            context: req => {
+                return {
+                    req: req.request
+                }
+            }
+        });
+        this.middlewares();
+    };
 
-app.express.use(cors());
-//app.express.use(logger("dev"));
-app.express.use(helmet());
+    private middlewares = () : void => {
+        this.app.express.use(cors());
+        this.app.express.use(logger("dev"));
+        this.app.express.use(helmet());
+        this.app.express.use(this.jwt)
+    };
 
-export default app;
+    private jwt = async (
+        req,
+        res: Response,
+        next: NextFunction
+      ): Promise<void> => {
+        const token = req.get("X-JWT");
+        if (token) {
+          const user = await decodeJWT(token);
+          if (user) {
+            req.user = user;
+          } else {
+            req.user = undefined;
+          }
+        }
+        next();
+      };
+}
+
+// const app = new GraphQLServer({
+//     schema
+// });
+
+// app.express.use(cors());
+// app.express.use(logger("dev"));
+// app.express.use(helmet());
+
+export default new App().app;
