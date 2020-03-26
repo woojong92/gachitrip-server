@@ -1,0 +1,7 @@
+type WithLike {
+  id: Int!
+  user: User!
+  with: With! 
+  createdAt: String
+  updatedAt: String
+}

@@ -1,17 +1,17 @@
 type EmailSignUpResponse{
     ok: Boolean!
     error: String
-    token: String
 }
 
 type Mutation {
     EmailSignUp(
-        firstName: String!
-        lastName: String!
+        firstName: String
+        lastName: String
+        username: String!
         email: String!
-        pssword: String!,
-        profilePhoto: String!,
-        age: Int!
-        phoneNumber: String!
+        password: String!,
+        birth: String!
+        nationality: String!
+        gender: String!
     ): EmailSignUpResponse!
 }

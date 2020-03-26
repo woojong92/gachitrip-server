@@ -1,0 +1,8 @@
+type WithComment {
+  id: Int!
+  text: String!
+  user: User!
+  with: With!
+  createdAt: String!
+  updatedAt: String
+}

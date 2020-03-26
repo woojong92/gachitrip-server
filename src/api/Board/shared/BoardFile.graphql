@@ -1,0 +1,7 @@
+type BoardFile {
+  id: Int!
+  url: String!
+  board: Board! 
+  createdAt: String!
+  updatedAt: String
+}

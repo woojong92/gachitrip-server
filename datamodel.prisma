@@ -1,17 +1,27 @@
+type Verification {
+  id: ID! @id
+  target: String
+  payload: String
+  key: String
+  verified: Boolean
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
 type User {
   id: ID! @id
   avatar: String
     @default(
       value:  "https://img.favpng.com/18/9/20/clip-art-openclipart-user-profile-facebook-free-content-png-favpng-6qpiFEGCQNDLuwyfp4eELvjNN.jpg"
     )
-  userName: String! @unique
-  firstName: String @defualt(value: "")
+  username: String! @unique
+  firstName: String @default(value: "")
   lastName: String
   email: String! @unique 
   password: String!
-  birth: DateTime!
+  birth: String!
   gender: String!
-  nationality: String
+  nationality: String!
 
   following: [User!]! @relation(name: "FollowRelation")
   followers: [User!]! @relation(name: "FollowRelation")

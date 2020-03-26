@@ -1,3 +1,40 @@
+type Board {
+  id: Int!
+  title: String!
+  text: String!
+  files: [BoardFile]
+  author: User
+  likes: [BoardLike]
+  comments: [BoardComment]
+  createdAt: String!
+  updatedAt: String
+}
+
+type BoardComment {
+  id: Int!
+  text: String!
+  user: User!
+  board: Board!
+  createdAt: String!
+  updatedAt: String
+}
+
+type BoardFile {
+  id: Int!
+  url: String!
+  board: Board!
+  createdAt: String!
+  updatedAt: String
+}
+
+type BoardLike {
+  id: Int!
+  user: User!
+  Board: Board!
+  createdAt: String!
+  updatedAt: String
+}
+
 type Chat {
   id: Int!
   messages: [Message]!
@@ -11,29 +48,6 @@ type Message {
   text: String!
   chat: Chat!
   user: User!
-  createdAt: String!
-  updatedAt: String
-}
-
-type Query {
-  sayBye: String!
-  sayHello(name: String!): SayHelloResponse!
-  GetMyProfile: GetMyProfileResponse!
-  user: User
-}
-
-type SayHelloResponse {
-  text: String!
-  error: Boolean!
-}
-
-type Place {
-  id: Int!
-  name: String!
-  lat: Float!
-  lng: Float!
-  address: String!
-  isFav: Boolean!
   createdAt: String!
   updatedAt: String
 }
@@ -55,92 +69,41 @@ type Ride {
   updatedAt: String
 }
 
-type CompleteEmailVerificationResponse {
+type EmailSignUpResponse {
   ok: Boolean!
   error: String
 }
 
 type Mutation {
-  CompleteEmailVerification(key: String!): CompleteEmailVerificationResponse!
-  CompletePhoneVerification(phoneNumber: String!, key: String!): CompletePhoneVerificationResponse!
-  EmailSignIn(email: String!, password: String!): EmailSignInResponse!
-  EmailSignUp(firstName: String!, lastName: String!, email: String!, pssword: String!, profilePhoto: String!, age: Int!, phoneNumber: String!): EmailSignUpResponse!
-  FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FacebookConnectResponse!
-  RequestEmailVerification: RequestEmailVerificationResponse!
-  StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!
-  UpdateMyProfile(firstName: String, lastName: String, email: String, password: String, profilePhoto: String, age: Int): UpdateMyProfileResponse!
-}
-
-type CompletePhoneVerificationResponse {
-  ok: Boolean!
-  error: String
-  token: String
-}
-
-type EmailSignInResponse {
-  ok: Boolean!
-  error: String
-  token: String
-}
-
-type EmailSignUpResponse {
-  ok: Boolean!
-  error: String
-  token: String
-}
-
-type FacebookConnectResponse {
-  ok: Boolean!
-  error: String
-  token: String
-}
-
-type GetMyProfileResponse {
-  ok: Boolean!
-  error: String
-  user: User
-}
-
-type RequestEmailVerificationResponse {
-  ok: Boolean!
-  error: String
+  EmailSignUp(firstName: String, lastName: String, username: String!, email: String!, password: String!, birth: String!, nationality: String!, gender: String!): EmailSignUpResponse!
 }
 
 type User {
   id: Int!
-  email: String
-  verifiedEmail: Boolean!
-  firstName: String!
-  lastName: String!
-  age: Int
-  password: String
-  phoneNumber: String
-  verifiedPhoneNumber: Boolean!
-  profilePhoto: String
-  fullName: String
-  isDriving: Boolean!
-  isRiding: Boolean!
-  isTaken: Boolean!
-  lastLng: Float
-  lastLat: Float
-  lastOrientation: Float
-  fbId: String
-  chat: Chat
-  messages: [Message]
-  ridesAsPassenger: [Ride]
-  ridesAsDriver: [Ride]
+  avatar: String
+  username: String!
+  firstName: String
+  lastName: String
+  email: String!
+  password: String!
+  birth: String!
+  gender: String!
+  nationality: String!
+  following: [User]
+  followers: [User]
+  boards: [Board]
+  boardLikes: [BoardLike]
+  boardComments: [BoardComment]
+  withs: [With]
+  withLikes: [WithLike]
+  withComments: [WithComment]
+  chats: [Chat]
   createdAt: String!
   updatedAt: String
 }
 
-type StartPhoneVerificationResponse {
-  ok: Boolean!
-  error: String
-}
-
-type UpdateMyProfileResponse {
-  ok: Boolean!
-  error: String
+type Query {
+  user: User
 }
 
 type Verification {
@@ -151,4 +114,53 @@ type Verification {
   verified: Boolean!
   createdAt: String!
   updatedAt: String!
+}
+
+type With {
+  id: Int!
+  title: String!
+  text: String!
+  files: [WithFile]
+  author: User
+  isUnisex: Boolean
+  unisex: Int
+  male: Int
+  female: Int
+  dayTrip: Boolean
+  dateFrom: String
+  dateTo: String
+  abroad: Boolean!
+  address: String
+  latitude: Float
+  longitude: Float
+  isCompeted: Boolean
+  likes: [WithLike]
+  comments: [WithComment]
+  createdAt: String!
+  updatedAt: String
+}
+
+type WithComment {
+  id: Int!
+  text: String!
+  user: User!
+  with: With!
+  createdAt: String!
+  updatedAt: String
+}
+
+type WithFile {
+  id: Int!
+  url: String!
+  with: With!
+  createdAt: String!
+  updatedAt: String
+}
+
+type WithLike {
+  id: Int!
+  user: User!
+  with: With!
+  createdAt: String
+  updatedAt: String
 }
