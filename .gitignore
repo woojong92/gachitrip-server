@@ -124,5 +124,5 @@ temp/
 generated
 build
 
-docker-compoese.yml
+.yml
 # End of https://www.gitignore.io/api/node,dotenv,visualstudiocode
