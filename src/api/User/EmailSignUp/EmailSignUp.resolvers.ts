@@ -4,8 +4,6 @@ import {
     EmailSignUpResponse 
 } from "../../../types/graph";
 
-// import { sendVerificationEmail } from "../../../utils/sendEmail";
-
 import { prisma } from "../../../../generated/prisma-client";
 
 const resolvers: Resolvers = {

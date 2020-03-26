@@ -1,0 +1,10 @@
+type CheckValidEmailResponse {
+    ok: Boolean!
+    error: String
+}
+
+type Mutation {
+    CheckValidEmail(
+        email: String!
+    ): CheckValidEmailResponse!
+}

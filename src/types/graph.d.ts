@@ -1,7 +1,14 @@
-export const typeDefs = ["type Board {\n  id: Int!\n  title: String!\n  text: String!\n  files: [BoardFile]\n  author: User\n  likes: [BoardLike]\n  comments: [BoardComment]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype BoardComment {\n  id: Int!\n  text: String!\n  user: User!\n  board: Board!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype BoardFile {\n  id: Int!\n  url: String!\n  board: Board!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype BoardLike {\n  id: Int!\n  user: User!\n  Board: Board!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype Chat {\n  id: Int!\n  messages: [Message]!\n  participants: [User]!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype Message {\n  id: Int!\n  text: String!\n  chat: Chat!\n  user: User!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype Ride {\n  id: Int!\n  status: String!\n  pickUpAddress: String!\n  pickUpLat: Float!\n  pickUpLng: Float!\n  dropOffAddress: String!\n  dropOffLat: Float!\n  dropOffLng: Float!\n  price: Float!\n  distance: String!\n  driver: User!\n  passagnger: User!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype EmailSignUpResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Mutation {\n  EmailSignUp(firstName: String, lastName: String, username: String!, email: String!, password: String!, birth: String!, nationality: String!, gender: String!): EmailSignUpResponse!\n}\n\ntype User {\n  id: Int!\n  avatar: String\n  username: String!\n  firstName: String\n  lastName: String\n  email: String!\n  password: String!\n  birth: String!\n  gender: String!\n  nationality: String!\n  following: [User]\n  followers: [User]\n  boards: [Board]\n  boardLikes: [BoardLike]\n  boardComments: [BoardComment]\n  withs: [With]\n  withLikes: [WithLike]\n  withComments: [WithComment]\n  chats: [Chat]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype Query {\n  user: User\n}\n\ntype Verification {\n  id: Int!\n  target: String!\n  payload: String!\n  key: String!\n  verified: Boolean!\n  createdAt: String!\n  updatedAt: String!\n}\n\ntype With {\n  id: Int!\n  title: String!\n  text: String!\n  files: [WithFile]\n  author: User\n  isUnisex: Boolean\n  unisex: Int\n  male: Int\n  female: Int\n  dayTrip: Boolean\n  dateFrom: String\n  dateTo: String\n  abroad: Boolean!\n  address: String\n  latitude: Float\n  longitude: Float\n  isCompeted: Boolean\n  likes: [WithLike]\n  comments: [WithComment]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype WithComment {\n  id: Int!\n  text: String!\n  user: User!\n  with: With!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype WithFile {\n  id: Int!\n  url: String!\n  with: With!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype WithLike {\n  id: Int!\n  user: User!\n  with: With!\n  createdAt: String\n  updatedAt: String\n}\n"];
+export const typeDefs = ["type Board {\n  id: Int!\n  title: String!\n  text: String!\n  files: [BoardFile]\n  author: User\n  likes: [BoardLike]\n  comments: [BoardComment]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype BoardComment {\n  id: Int!\n  text: String!\n  user: User!\n  board: Board!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype BoardFile {\n  id: Int!\n  url: String!\n  board: Board!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype BoardLike {\n  id: Int!\n  user: User!\n  Board: Board!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype Chat {\n  id: Int!\n  messages: [Message]!\n  participants: [User]!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype Message {\n  id: Int!\n  text: String!\n  chat: Chat!\n  user: User!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype Ride {\n  id: Int!\n  status: String!\n  pickUpAddress: String!\n  pickUpLat: Float!\n  pickUpLng: Float!\n  dropOffAddress: String!\n  dropOffLat: Float!\n  dropOffLng: Float!\n  price: Float!\n  distance: String!\n  driver: User!\n  passagnger: User!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype CheckValidEmailResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Mutation {\n  CheckValidEmail(email: String!): CheckValidEmailResponse!\n  CompleteEmailVerification(key: String!): CompleteEmailVerificationResponse!\n  CompletePhoneVerification(phoneNumber: String!, key: String!): CompletePhoneVerificationResponse!\n  EmailSignIn(email: String!, password: String!): EmailSignInResponse!\n  EmailSignUp(firstName: String, lastName: String, username: String!, email: String!, password: String!, birth: String!, nationality: String!, gender: String!): EmailSignUpResponse!\n  FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FacebookConnectResponse!\n  RequestEmailVerification(email: String!): RequestEmailVerificationResponse!\n  StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!\n  UpdateMyProfile(firstName: String, lastName: String, email: String, password: String, profilePhoto: String, age: Int): UpdateMyProfileResponse!\n}\n\ntype CompleteEmailVerificationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype CompletePhoneVerificationResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype EmailSignInResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype EmailSignUpResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype FacebookConnectResponse {\n  ok: Boolean!\n  error: String\n  token: String\n}\n\ntype GetMyProfileResponse {\n  ok: Boolean!\n  error: String\n  user: User\n}\n\ntype Query {\n  GetMyProfile: GetMyProfileResponse!\n  user: User\n}\n\ntype RequestEmailVerificationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype User {\n  id: Int!\n  avatar: String\n  username: String!\n  firstName: String\n  lastName: String\n  email: String!\n  password: String!\n  birth: String!\n  gender: String!\n  nationality: String!\n  following: [User]\n  followers: [User]\n  boards: [Board]\n  boardLikes: [BoardLike]\n  boardComments: [BoardComment]\n  withs: [With]\n  withLikes: [WithLike]\n  withComments: [WithComment]\n  chats: [Chat]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype StartPhoneVerificationResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype UpdateMyProfileResponse {\n  ok: Boolean!\n  error: String\n}\n\ntype Verification {\n  id: Int!\n  target: String!\n  payload: String!\n  key: String!\n  verified: Boolean!\n  createdAt: String!\n  updatedAt: String!\n}\n\ntype With {\n  id: Int!\n  title: String!\n  text: String!\n  files: [WithFile]\n  author: User\n  isUnisex: Boolean\n  unisex: Int\n  male: Int\n  female: Int\n  dayTrip: Boolean\n  dateFrom: String\n  dateTo: String\n  abroad: Boolean!\n  address: String\n  latitude: Float\n  longitude: Float\n  isCompeted: Boolean\n  likes: [WithLike]\n  comments: [WithComment]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype WithComment {\n  id: Int!\n  text: String!\n  user: User!\n  with: With!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype WithFile {\n  id: Int!\n  url: String!\n  with: With!\n  createdAt: String!\n  updatedAt: String\n}\n\ntype WithLike {\n  id: Int!\n  user: User!\n  with: With!\n  createdAt: String\n  updatedAt: String\n}\n"];
 /* tslint:disable */
 
 export interface Query {
+  GetMyProfile: GetMyProfileResponse;
+  user: User | null;
+}
+
+export interface GetMyProfileResponse {
+  ok: boolean;
+  error: string | null;
   user: User | null;
 }
 
@@ -133,7 +140,33 @@ export interface Message {
 }
 
 export interface Mutation {
+  CheckValidEmail: CheckValidEmailResponse;
+  CompleteEmailVerification: CompleteEmailVerificationResponse;
+  CompletePhoneVerification: CompletePhoneVerificationResponse;
+  EmailSignIn: EmailSignInResponse;
   EmailSignUp: EmailSignUpResponse;
+  FacebookConnect: FacebookConnectResponse;
+  RequestEmailVerification: RequestEmailVerificationResponse;
+  StartPhoneVerification: StartPhoneVerificationResponse;
+  UpdateMyProfile: UpdateMyProfileResponse;
+}
+
+export interface CheckValidEmailMutationArgs {
+  email: string;
+}
+
+export interface CompleteEmailVerificationMutationArgs {
+  key: string;
+}
+
+export interface CompletePhoneVerificationMutationArgs {
+  phoneNumber: string;
+  key: string;
+}
+
+export interface EmailSignInMutationArgs {
+  email: string;
+  password: string;
 }
 
 export interface EmailSignUpMutationArgs {
@@ -147,7 +180,74 @@ export interface EmailSignUpMutationArgs {
   gender: string;
 }
 
+export interface FacebookConnectMutationArgs {
+  firstName: string;
+  lastName: string;
+  email: string | null;
+  fbId: string;
+}
+
+export interface RequestEmailVerificationMutationArgs {
+  email: string;
+}
+
+export interface StartPhoneVerificationMutationArgs {
+  phoneNumber: string;
+}
+
+export interface UpdateMyProfileMutationArgs {
+  firstName: string | null;
+  lastName: string | null;
+  email: string | null;
+  password: string | null;
+  profilePhoto: string | null;
+  age: number | null;
+}
+
+export interface CheckValidEmailResponse {
+  ok: boolean;
+  error: string | null;
+}
+
+export interface CompleteEmailVerificationResponse {
+  ok: boolean;
+  error: string | null;
+}
+
+export interface CompletePhoneVerificationResponse {
+  ok: boolean;
+  error: string | null;
+  token: string | null;
+}
+
+export interface EmailSignInResponse {
+  ok: boolean;
+  error: string | null;
+  token: string | null;
+}
+
 export interface EmailSignUpResponse {
+  ok: boolean;
+  error: string | null;
+}
+
+export interface FacebookConnectResponse {
+  ok: boolean;
+  error: string | null;
+  token: string | null;
+}
+
+export interface RequestEmailVerificationResponse {
+  ok: boolean;
+  error: string | null;
+}
+
+export interface StartPhoneVerificationResponse {
+  ok: boolean;
+  error: string | null;
+}
+
+export interface UpdateMyProfileResponse {
   ok: boolean;
   error: string | null;
 }
