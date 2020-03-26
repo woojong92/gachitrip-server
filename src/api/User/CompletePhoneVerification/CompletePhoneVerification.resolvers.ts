@@ -25,7 +25,7 @@ const resolvers: Resolvers = {
                         ok: false,
                         error: "Verification key not vaild",
                         token: null
-                    }
+                    };
                 } else {
                     verification.verified = true;
                     verification.save();
@@ -49,23 +49,23 @@ const resolvers: Resolvers = {
                         ok: true,
                         error: null,
                         token
-                    }
+                    };
                 }else{
                     return {
                         ok: true,
                         error: null,
                         token: null
-                    }
+                    };
                 }
             }catch(error) {
                 return {
                     ok: false,
                     error: error.message,
                     token: null
-                }
+                };
             }
         }
     }
-}
+};
 
 export default resolvers;

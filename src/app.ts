@@ -4,54 +4,21 @@ import cors from "cors";
 import helmet from "helmet";
 import logger from "morgan";
 import schema from "./schema";
-import decodeJWT from "./utils/decodeJWT";
-import { NextFunction, Response } from "express";
+import { authenticateJwt } from "./utils/middlewares";
 
-class App {
-    public app: GraphQLServer;
-    constructor() {
-        this.app = new GraphQLServer({
-            schema,
-            context: req => {
-                return {
-                    req: req.request
-                }
-            }
-        });
-        this.middlewares();
-    };
+const app = new GraphQLServer({
+    schema,
+    context: req => {
+      return {
+          req: req.request
+      }
+    }
+});
 
-    private middlewares = () : void => {
-        this.app.express.use(cors());
-        this.app.express.use(logger("dev"));
-        this.app.express.use(helmet());
-        this.app.express.use(this.jwt)
-    };
+app.express.use(cors());
+app.express.use(logger("dev"));
+app.express.use(helmet());
+app.express.use(authenticateJwt);
 
-    private jwt = async (
-        req,
-        res: Response,
-        next: NextFunction
-      ): Promise<void> => {
-        const token = req.get("X-JWT");
-        if (token) {
-          const user = await decodeJWT(token);
-          if (user) {
-            req.user = user;
-          } else {
-            req.user = undefined;
-          }
-        }
-        next();
-      };
-}
+export default app; 
 
-// const app = new GraphQLServer({
-//     schema
-// });
-
-// app.express.use(cors());
-// app.express.use(logger("dev"));
-// app.express.use(helmet());
-
-export default new App().app;

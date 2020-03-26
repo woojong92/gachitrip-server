@@ -39,6 +39,12 @@ yarn add @types/twilio --dev
 yarn add jsonwebtoken
 yarn add @types/jsonwebtoken --dev
 
+mailgun - email 서비스
+yarn add mailgun-js
+yarn add @types/mailgun-js --dev
+
+
+
 ## Resolvers
 
 ### Public Resolvers:

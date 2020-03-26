@@ -1,0 +1,142 @@
+type User {
+  id: ID! @id
+  avatar: String
+    @default(
+      value:  "https://img.favpng.com/18/9/20/clip-art-openclipart-user-profile-facebook-free-content-png-favpng-6qpiFEGCQNDLuwyfp4eELvjNN.jpg"
+    )
+  userName: String! @unique
+  firstName: String @defualt(value: "")
+  lastName: String
+  email: String! @unique 
+  password: String!
+  birth: DateTime!
+  gender: String!
+  nationality: String
+
+  following: [User!]! @relation(name: "FollowRelation")
+  followers: [User!]! @relation(name: "FollowRelation")
+  
+  boards: [Board!]! @relation(name: "BoardsOfUser")
+  boardLikes: [BoardLike!]! @relation(name: "BoardLikesOfUser")
+  boardComments: [BoardComment!]! @relation(name: "BoardCommentsOfUser")
+
+  withs: [With!]! @relation(name: "WithsOfUser")
+  withLikes: [WithLike!]! @relation(name: "WithLikesOfUser")
+  withComments: [WithComment!]! @relation(name: "WithCommentsOfUser")
+
+  chats: [Chat!]!
+
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Board {
+  id: ID! @id
+  title: String!
+  text: String!
+  files: [BoardFile!]! @relation(name: "FilesOfBoard")
+  author: User @relation(name: "BoardsOfUser")
+  likes: [BoardLike!]! @relation(name: "LikeOfPost", onDelete: CASCADE)
+  comments: [BoardComment!]! @relation(name: "CommentOfBoard")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type BoardLike {
+  id: ID! @id
+  user: User @relation(name: "BoardLikesOfUser")
+  Board: Board @relation(name: "LikeOfBoard")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type BoardComment {
+  id: ID! @id
+  text: String!
+  user: User @relation(name: "BoardCommentsOfUser")
+  board: Board @relation(name: "CommentOfBoard")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type BoardFile {
+  id: ID! @id
+  url: String!
+  board: Board @relation(name: "FilesOfBoard")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type With {
+  id: ID! @id
+  title: String!
+  text: String!
+  files: [WithFile!]! @relation(name: "FilesOfWith")
+  author: User @relation(name: "WithsOfUser")
+  
+  isUnisex: Boolean @default(value: false)
+  unisex: Int
+  male: Int
+  female: Int
+
+  dayTrip: Boolean @default(value: false)
+  dateFrom: DateTime!
+  dateTo: DateTime
+  
+  abroad: Boolean! 
+  
+  address: String
+  latitude: Float
+  longitude: Float
+  
+  isCompeted: Boolean @default(value: false)
+  likes: [WithLike!]! @relation(name: "LikeOfWith", onDelete: CASCADE)
+  comments: [WithComment!]! @relation(name: "CommentOfWith")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type WithLike {
+  id: ID! @id
+  user: User @relation(name: "WithLikesOfUser")
+  with: With @relation(name: "LikeOfWith")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type WithComment {
+  id: ID! @id
+  text: String!
+  user: User @relation(name: "WithCommentsOfUser")
+  with: With @relation(name: "CommentOfWith")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type WithFile {
+  id: ID! @id
+  url: String!
+  with: With @relation(name: "FilesOfWith")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+
+
+type Chat {
+  id: ID! @id
+  participants: [User!]!
+  messages: [Message!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Message {
+  id: ID! @id
+  text: String!
+  from: User! @relation(name: "From")
+  to: User! @relation(name: "To")
+  chat: Chat!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
