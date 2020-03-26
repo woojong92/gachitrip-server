@@ -69,7 +69,6 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity
-.lock
 
 # dotenv environment variables file
 .env.test
@@ -121,5 +120,8 @@ temp/
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+
+generated
+build
 
 # End of https://www.gitignore.io/api/node,dotenv,visualstudiocode
