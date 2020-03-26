@@ -1,4 +1,4 @@
-const createKey = (target:string): any => {
+export const createKey = (target:string): any => {
     if (target === "PHONE") {
       return  Math.floor(Math.random() * 100000).toString();
     } else if (target === "EMAIL") {
@@ -7,3 +7,4 @@ const createKey = (target:string): any => {
         .substr(2);
     }
 }
+

@@ -69,13 +69,65 @@ type Ride {
   updatedAt: String
 }
 
-type EmailSignUpResponse {
+type CheckValidEmailResponse {
   ok: Boolean!
   error: String
 }
 
 type Mutation {
+  CheckValidEmail(email: String!): CheckValidEmailResponse!
+  CompleteEmailVerification(key: String!): CompleteEmailVerificationResponse!
+  CompletePhoneVerification(phoneNumber: String!, key: String!): CompletePhoneVerificationResponse!
+  EmailSignIn(email: String!, password: String!): EmailSignInResponse!
   EmailSignUp(firstName: String, lastName: String, username: String!, email: String!, password: String!, birth: String!, nationality: String!, gender: String!): EmailSignUpResponse!
+  FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FacebookConnectResponse!
+  RequestEmailVerification(email: String!): RequestEmailVerificationResponse!
+  StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!
+  UpdateMyProfile(firstName: String, lastName: String, email: String, password: String, profilePhoto: String, age: Int): UpdateMyProfileResponse!
+}
+
+type CompleteEmailVerificationResponse {
+  ok: Boolean!
+  error: String
+}
+
+type CompletePhoneVerificationResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type EmailSignInResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type EmailSignUpResponse {
+  ok: Boolean!
+  error: String
+}
+
+type FacebookConnectResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type GetMyProfileResponse {
+  ok: Boolean!
+  error: String
+  user: User
+}
+
+type Query {
+  GetMyProfile: GetMyProfileResponse!
+  user: User
+}
+
+type RequestEmailVerificationResponse {
+  ok: Boolean!
+  error: String
 }
 
 type User {
@@ -102,8 +154,14 @@ type User {
   updatedAt: String
 }
 
-type Query {
-  user: User
+type StartPhoneVerificationResponse {
+  ok: Boolean!
+  error: String
+}
+
+type UpdateMyProfileResponse {
+  ok: Boolean!
+  error: String
 }
 
 type Verification {

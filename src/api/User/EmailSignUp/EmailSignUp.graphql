@@ -9,7 +9,7 @@ type Mutation {
         lastName: String
         username: String!
         email: String!
-        password: String!,
+        password: String!
         birth: String!
         nationality: String!
         gender: String!
