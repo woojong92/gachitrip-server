@@ -1,0 +1,7 @@
+type BoardLike {
+  id: Int!
+  user: User! 
+  Board: Board! 
+  createdAt: String!
+  updatedAt: String
+}

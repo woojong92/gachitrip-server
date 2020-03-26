@@ -1,0 +1,8 @@
+type BoardComment {
+    id: Int!
+    text: String!
+    user: User!
+    board: Board!
+    createdAt: String!
+    updatedAt: String
+}

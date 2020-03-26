@@ -1,0 +1,7 @@
+type WithFile {
+  id: Int!
+  url: String!
+  with: With! 
+  createdAt: String!
+  updatedAt: String
+}

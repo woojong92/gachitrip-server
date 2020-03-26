@@ -1,0 +1,11 @@
+type Board {
+    id: Int!
+    title: String!
+    text: String!
+    files: [BoardFile]
+    author: User
+    likes: [BoardLike]
+    comments: [BoardComment]
+    createdAt: String!
+    updatedAt: String
+}

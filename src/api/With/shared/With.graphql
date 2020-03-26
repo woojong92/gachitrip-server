@@ -1,0 +1,27 @@
+type With {
+  id: Int!
+  title: String!
+  text: String!
+  files: [WithFile]
+  author: User   
+  isUnisex: Boolean
+  unisex: Int
+  male: Int
+  female: Int
+
+  dayTrip: Boolean 
+  dateFrom: String
+  dateTo: String
+  
+  abroad: Boolean! 
+  
+  address: String
+  latitude: Float
+  longitude: Float
+  
+  isCompeted: Boolean 
+  likes: [WithLike]
+  comments: [WithComment]
+  createdAt: String!
+  updatedAt: String
+}
