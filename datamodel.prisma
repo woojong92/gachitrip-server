@@ -1,7 +1,7 @@
 type Verification {
   id: ID! @id
   target: String
-  payload: String
+  payload: String @unique
   key: String
   verified: Boolean
   createdAt: DateTime! @createdAt
@@ -18,6 +18,8 @@ type User {
   firstName: String @default(value: "")
   lastName: String
   email: String! @unique 
+  verifiedEmail: Boolean @default(value: false)
+
   password: String!
   birth: String!
   gender: String!

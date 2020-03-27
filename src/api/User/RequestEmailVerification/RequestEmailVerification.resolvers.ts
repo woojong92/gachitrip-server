@@ -1,13 +1,11 @@
-// import User from "../../../entities/User";
-// import Verification from "../../../entities/Verification";
+import { createKey } from "../../../utils/createKey";
 import { 
   RequestEmailVerificationResponse,
   RequestEmailVerificationMutationArgs
 } from "../../../types/graph";
 import { Resolvers } from "../../../types/resolvers";
-// import { sendVerificationEmail } from "../../../utils/sendEmail";
 import { prisma } from "../../../../generated/prisma-client";
-import { createKey } from "../../../utils/createKey";
+
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -16,75 +14,33 @@ const resolvers: Resolvers = {
         args: RequestEmailVerificationMutationArgs
       ): Promise<RequestEmailVerificationResponse> => {
         const { email } =  args;
-        // 유저에 등록되어 있는 email인지 확인
-        const isVaildEmail = await prisma.$exists.user({email});
-        
-        if(!isVaildEmail){
-          // 이미 존재하는 이메일이면
-          return {
-            ok: false,
-            error: "이미 존재하는 이메일 입니다."
+        const key = await createKey("EMAIL");
+        try {
+          const oldVerification = await prisma.verifications({ where: { payload: email } });
+          if( oldVerification.length ) {
+            await prisma.updateVerification({ data: { key, verified: false }, where: { payload: email } });
+          }else{
+            await prisma.createVerification({
+              target: "EMAIL",
+              payload: email,
+              key,
+              verified: false
+            })
           }
-        }else{
-          const key = await createKey("EMAIL");
-          await prisma.createVerification({
-            target: "EMAIL",
-            payload: email,
-            key,
-            verified: false
-          })
+          console.log("메일 인증을 위해 메일 전송")
+          console.log("메일 전송 기능 구현 필요")
           return {
-            ok: false,
-            error: "error.message"
+            ok: true,
+            error: null
           };
+        } catch ( error ) {
+            return {
+              ok: false,
+              error: error.message
+           };
         }
-      }
     }
-  };
-
-        // const oldVerification = await prisma.verification({payload: email})
-
-        // if(oldVerification){
-        //   await prisma.deleteVerification({id: oldVerification.id})
-        // }
-
-
-        // await sendVerificationEmail(user.fullName, key);
-        
-
-
-        // if (user.email && !user.verifiedEmail) {
-        //   try {
-        //     const oldVerification = await Verification.findOne({
-        //       payload: user.email
-        //     });
-        //     if (oldVerification) {
-        //       oldVerification.remove();
-        //     }
-        //     const newVerification = await Verification.create({
-        //       payload: user.email,
-        //       target: "EMAIL"
-        //     }).save();
-        //     await sendVerificationEmail(user.fullName, newVerification.key);
-
-        //   } catch (error) {
-        //     return {
-        //       ok: false,
-        //       error: error.message
-        //     };
-        //   }
-
-
-
-        // } else {
-        //   return {
-        //     ok: false,
-        //     error: "Your user has no email to verify"
-        //   };
-        // }
-      //  }
-    // )
-  // }
-// };
+  }
+};
 
 export default resolvers;
