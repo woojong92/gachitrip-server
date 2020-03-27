@@ -12,10 +12,7 @@ const resolvers: Resolvers = {
             _, 
             args: EmailSignUpMutationArgs
         ): Promise<EmailSignUpResponse> => {
-            const {         
-                username,
-                email,
-            } = args;
+            const { username, email } = args;
             try {
                 const existingUser = await prisma.$exists.user({ OR: [{ username}, {email}]});
                 if(existingUser) {
@@ -24,20 +21,12 @@ const resolvers: Resolvers = {
                         error: "You should log in instead",
                     }
                 }else {
-                    const emailVerification = await prisma.$exists.verification({payload: email, verified: true})
-                    if( emailVerification){
-                        await prisma.createUser({
-                            ...args
-                        });
-                        return {
-                            ok: true,
-                            error: null,
-                        }
-                    }else{
-                        return {
-                            ok: false,
-                            error: "email is not verificated",
-                        }
+                    await prisma.createUser({
+                        ...args
+                    })
+                    return {
+                        ok: true,
+                        error: null, 
                     }
                 }
             }catch(error){

@@ -16,7 +16,7 @@ const resolvers: Resolvers = {
             try{
                 const existingUser = await User.findOne({fbId});
                 if(existingUser) {
-                    const token = createJWT(existingUser.id);
+                    const token = createJWT( (existingUser.id).toString() );
                     return {
                         ok: true,
                         error: null,
@@ -36,7 +36,7 @@ const resolvers: Resolvers = {
                     ...args, 
                     profilePhoto: `https://graph.facebook.com/${fbId}/picture?type=square`
                 }).save();
-                const token = createJWT(newUser.id);
+                const token = createJWT( (newUser.id).toString() );
                 return {
                     ok: true,
                     error: null,

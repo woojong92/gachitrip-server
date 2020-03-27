@@ -17,7 +17,7 @@ const resolvers: Resolvers = {
         const key = await createKey("EMAIL");
         try {
           const oldVerification = await prisma.verifications({ where: { payload: email } });
-          if( oldVerification.length ) {
+          if( oldVerification[0] ) {
             await prisma.updateVerification({ data: { key, verified: false }, where: { payload: email } });
           }else{
             await prisma.createVerification({
