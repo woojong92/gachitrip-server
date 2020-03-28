@@ -1,55 +1,63 @@
-import User from "../../../entities/User";
-import Verification from "../../../entities/Verification";
 import {
   CompleteEmailVerificationMutationArgs,
   CompleteEmailVerificationResponse
 } from "../../../types/graph";
 import { Resolvers } from "../../../types/resolvers";
-import privateResolver from "../../../utils/privateResolver";
+import { prisma } from "../../../../generated/prisma-client";
 
 const resolvers: Resolvers = {
   Mutation: {
-    CompleteEmailVerification: privateResolver(
+    CompleteEmailVerification:
       async (
         _,
         args: CompleteEmailVerificationMutationArgs,
-        { req }
+
       ): Promise<CompleteEmailVerificationResponse> => {
-        const user: User = req.user;
-        const { key } = args;
-        if (user.email) {
-          try {
-            const verification = await Verification.findOne({
+        const { key, email } = args;
+        
+        try {
+          const verification = await prisma.verifications({
+            where: {
               key,
-              payload: user.email
-            });
-            if (verification) {
-              user.verifiedEmail = true;
-              user.save();
-              return {
-                ok: true,
-                error: null
-              };
-            } else {
-              return {
-                ok: false,
-                error: "Cant verify email"
-              };
+              payload: email
             }
-          } catch (error) {
+          });
+          // 해당 키와 메일을 가지고 있는지를 확인하고
+
+          if (verification[0] ) {
+            await prisma.updateVerification({
+              data: {
+                verified: true
+              },
+              where: {
+                payload: email
+              }
+            });
+            await prisma.updateUser({
+              data: {
+                verifiedEmail: true,
+              },
+              where: {
+                email
+              }
+            });
+            return {
+              ok: true,
+              error: null
+            };
+          } else {
             return {
               ok: false,
-              error: error.message
+              error: "Cant verify email"
             };
           }
-        } else {
+        } catch (error) {
           return {
             ok: false,
-            error: "No email to verify"
+            error: error.message
           };
         }
       }
-    )
   }
 };
 

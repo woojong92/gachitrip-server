@@ -76,7 +76,7 @@ type CheckValidEmailResponse {
 
 type Mutation {
   CheckValidEmail(email: String!): CheckValidEmailResponse!
-  CompleteEmailVerification(key: String!): CompleteEmailVerificationResponse!
+  CompleteEmailVerification(key: String!, email: String!): CompleteEmailVerificationResponse!
   CompletePhoneVerification(phoneNumber: String!, key: String!): CompletePhoneVerificationResponse!
   EmailSignIn(email: String!, password: String!): EmailSignInResponse!
   EmailSignUp(firstName: String, lastName: String, username: String!, email: String!, password: String!, birth: String!, nationality: String!, gender: String!): EmailSignUpResponse!
