@@ -16,6 +16,12 @@ type Mutation {
   UpdateMyProfile(firstName: String, lastName: String, email: String, password: String, profilePhoto: String, age: Int): UpdateMyProfileResponse!
 }
 
+type Query {
+  ReadBoard(id: String!): Board!
+  GetMyProfile: GetMyProfileResponse!
+  user: User
+}
+
 type Board {
   id: Int!
   title: String!
@@ -123,11 +129,6 @@ type FacebookConnectResponse {
 type GetMyProfileResponse {
   ok: Boolean!
   error: String
-  user: User
-}
-
-type Query {
-  GetMyProfile: GetMyProfileResponse!
   user: User
 }
 
