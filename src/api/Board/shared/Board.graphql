@@ -3,7 +3,7 @@ type Board {
     title: String!
     text: String!
     files: [BoardFile]
-    author: User
+    author: User!
     likes: [BoardLike]
     comments: [BoardComment]
     createdAt: String!
