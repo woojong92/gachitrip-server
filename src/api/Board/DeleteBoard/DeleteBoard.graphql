@@ -1,0 +1,8 @@
+type DeleteBoardResponse{
+    ok: Boolean!
+    error: String
+}
+
+type Mutation {
+    DeleteBoard(id: String!): DeleteBoardResponse!
+}

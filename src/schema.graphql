@@ -5,6 +5,7 @@ type CreateBoardResponse {
 
 type Mutation {
   CreateBoard(title: String!, text: String!, files: [String!]!): CreateBoardResponse!
+  DeleteBoard(id: String!): DeleteBoardResponse!
   UpdateBoard(id: String!, title: String!, text: String!): Board!
   CheckValidEmail(email: String!): CheckValidEmailResponse!
   CompleteEmailVerification(key: String!, email: String!): CompleteEmailVerificationResponse!
@@ -15,6 +16,11 @@ type Mutation {
   RequestEmailVerification(email: String!): RequestEmailVerificationResponse!
   StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!
   UpdateMyProfile(firstName: String, lastName: String, email: String, password: String, profilePhoto: String, age: Int): UpdateMyProfileResponse!
+}
+
+type DeleteBoardResponse {
+  ok: Boolean!
+  error: String
 }
 
 type Query {
