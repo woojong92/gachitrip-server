@@ -24,6 +24,7 @@ type DeleteBoardResponse {
 }
 
 type Query {
+  ListBoard: [Board!]!
   ReadBoard(id: String!): Board!
   GetMyProfile: GetMyProfileResponse!
   user: User

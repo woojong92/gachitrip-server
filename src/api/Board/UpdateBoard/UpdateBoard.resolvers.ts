@@ -1,6 +1,6 @@
 import { Resolvers } from "../../../types/resolvers";
 import privateResolver from "../../../utils/privateResolver";
-import { UpdateBoardMutationArgs, Board } from "../../../types/graph";
+import { UpdateBoardMutationArgs } from "../../../types/graph";
 import { prisma } from "../../../../generated/prisma-client";
 
 
