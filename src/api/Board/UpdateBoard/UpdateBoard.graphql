@@ -1,0 +1,8 @@
+type Mutation {
+    UpdateBoard(
+        id: String!
+        title: String!
+        text: String!
+    ): Board!
+}
+
