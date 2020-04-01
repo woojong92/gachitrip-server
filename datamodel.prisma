@@ -47,7 +47,7 @@ type Board {
   title: String!
   text: String!
   files: [BoardFile!]! @relation(name: "FilesOfBoard")
-  author: User @relation(name: "BoardsOfUser")
+  author: User! @relation(name: "BoardsOfUser")
   likes: [BoardLike!]! @relation(name: "LikeOfPost", onDelete: CASCADE)
   comments: [BoardComment!]! @relation(name: "CommentOfBoard")
   createdAt: DateTime! @createdAt

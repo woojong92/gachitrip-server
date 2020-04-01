@@ -1,9 +1,27 @@
+type CreateBoardResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  CreateBoard(title: String!, text: String!, files: [String!]!): CreateBoardResponse!
+  CheckValidEmail(email: String!): CheckValidEmailResponse!
+  CompleteEmailVerification(key: String!, email: String!): CompleteEmailVerificationResponse!
+  CompletePhoneVerification(phoneNumber: String!, key: String!): CompletePhoneVerificationResponse!
+  EmailSignIn(email: String!, password: String!): EmailSignInResponse!
+  EmailSignUp(firstName: String, lastName: String, username: String!, email: String!, password: String!, birth: String!, nationality: String!, gender: String!): EmailSignUpResponse!
+  FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FacebookConnectResponse!
+  RequestEmailVerification(email: String!): RequestEmailVerificationResponse!
+  StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!
+  UpdateMyProfile(firstName: String, lastName: String, email: String, password: String, profilePhoto: String, age: Int): UpdateMyProfileResponse!
+}
+
 type Board {
   id: Int!
   title: String!
   text: String!
   files: [BoardFile]
-  author: User
+  author: User!
   likes: [BoardLike]
   comments: [BoardComment]
   createdAt: String!
@@ -72,18 +90,6 @@ type Ride {
 type CheckValidEmailResponse {
   ok: Boolean!
   error: String
-}
-
-type Mutation {
-  CheckValidEmail(email: String!): CheckValidEmailResponse!
-  CompleteEmailVerification(key: String!, email: String!): CompleteEmailVerificationResponse!
-  CompletePhoneVerification(phoneNumber: String!, key: String!): CompletePhoneVerificationResponse!
-  EmailSignIn(email: String!, password: String!): EmailSignInResponse!
-  EmailSignUp(firstName: String, lastName: String, username: String!, email: String!, password: String!, birth: String!, nationality: String!, gender: String!): EmailSignUpResponse!
-  FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FacebookConnectResponse!
-  RequestEmailVerification(email: String!): RequestEmailVerificationResponse!
-  StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!
-  UpdateMyProfile(firstName: String, lastName: String, email: String, password: String, profilePhoto: String, age: Int): UpdateMyProfileResponse!
 }
 
 type CompleteEmailVerificationResponse {

@@ -1,0 +1,13 @@
+type CreateBoardResponse {
+    ok: Boolean!
+    error: String
+}
+
+type Mutation {
+    CreateBoard(
+        title: String!
+        text: String!
+        files: [String!]!
+    ): CreateBoardResponse!
+}
+
