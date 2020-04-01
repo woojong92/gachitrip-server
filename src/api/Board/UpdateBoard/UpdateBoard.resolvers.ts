@@ -16,7 +16,7 @@ const resolvers: Resolvers = {
             const { user } = req;
             const board = await prisma.$exists.board({ id, author: { id: user.id } });
             if( board ){
-                return prisma.updateBoard({
+                return await prisma.updateBoard({
                     data: { title, text },
                     where: { id }
                 });
